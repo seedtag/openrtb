@@ -103,7 +103,7 @@ type Imp struct {
 	//   integer; default 0
 	// Description:
 	//   1 = the ad is interstitial or full screen, 0 = not interstitial.
-	Instl int8 `json:"instl,omitempty"`
+	Instl int8 `json:"instl"`
 
 	// Attribute:
 	//   tagid
