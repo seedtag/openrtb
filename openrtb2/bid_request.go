@@ -90,7 +90,7 @@ type BidRequest struct {
 	// Description:
 	//    Indicator of test mode in which auctions are not billable,
 	//    where 0 = live mode, 1 = test mode.
-	Test int8 `json:"test,omitempty"`
+	Test int8 `json:"test"`
 
 	// Attribute:
 	//   at
@@ -148,7 +148,7 @@ type BidRequest struct {
 	//   (e.g., all on the web page, all video spots such as pre/mid/post
 	//   roll) to support road-blocking. 0 = no or unknown, 1 = yes, the
 	//   impressions offered represent all that are available.
-	AllImps int8 `json:"allimps,omitempty"`
+	AllImps int8 `json:"allimps"`
 
 	// Attribute:
 	//   cur

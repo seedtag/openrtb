@@ -1,3 +1,5 @@
+Check [this doc](https://github.com/seedtag/openrtb/blob/seedtag_main/SEEDTAG.md) for seedtag changes.
+
 # openrtb [![Go Reference](https://pkg.go.dev/badge/github.com/prebid/openrtb/v20.svg)](https://pkg.go.dev/github.com/prebid/openrtb/v20) [![Test](https://github.com/prebid/openrtb/actions/workflows/test.yml/badge.svg)](https://github.com/prebid/openrtb/actions/workflows/test.yml)
 
 [OpenRTB](https://iabtechlab.com/standards/openrtb/), [AdCOM](https://iabtechlab.com/standards/openmedia) and [OpenRTB Dynamic Native Ads](https://iabtechlab.com/standards/openrtb-native/) types for [Go programming language](https://golang.org/)
