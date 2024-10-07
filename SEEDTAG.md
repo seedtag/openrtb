@@ -1,11 +1,17 @@
 ## Seedtag's OpenRTB
 
-This library is forked as a close copy of previd/openrtb but with neccesary changes to operate at Seedtag.
+This library has been forked from prebid/openrtb and our goal is to make the minimum neccessary changes to operate at Seedtag.
 
+## Development flow
 
+Key points:
+- main remains unchanged to be able to sync from upstream
+- seedtag_main will be main with the custom changes, where we plug our repositories
 
 
 ## What's different from prebid/openrtb
+
+Here we list all the changes that have been done to the original protocol at prebid/openrtb.
 
 ### default=0 and omitempty
 
