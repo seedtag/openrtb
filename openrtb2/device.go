@@ -269,6 +269,15 @@ type Device struct {
 	IFA string `json:"ifa,omitempty"`
 
 	// Attribute:
+	//   ifa_type
+	// Type:
+	//   string
+	// Definition:
+	//   Provider of the IFA identifier. Not actually standard in the OpenRTB spec, but added here for convenience.
+	// https://iabtechlab.com/wp-content/uploads/2018/12/OTT-IFA-guidelines.final_Dec2018.pdf
+	IFAType string `json:"ifa_type,omitempty"`
+
+	// Attribute:
 	//   didsha1
 	// Type:
 	//   string; DEPRECATED

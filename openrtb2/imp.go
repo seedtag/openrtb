@@ -175,7 +175,7 @@ type Imp struct {
 	//   an extra life in a game, or get a sponsored ad-free music
 	//   session. The reward is typically distributed after the video ad is
 	//   completed.
-	Rwdd int8 `json:"rwdd,omitempty"`
+	Rwdd int8 `json:"rwdd"`
 
 	// Attribute:
 	//   ssai
@@ -189,7 +189,7 @@ type Imp struct {
 	//   1 = all client-side (i.e., not server-side),
 	//   2 = assets stitched server-side but tracking pixels fired client-side,
 	//   3 = all server-side.
-	SSAI AdInsertion `json:"ssai,omitempty"`
+	SSAI AdInsertion `json:"ssai"`
 
 	// Attribute:
 	//   exp
