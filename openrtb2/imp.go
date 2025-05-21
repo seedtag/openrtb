@@ -306,10 +306,7 @@ func (i *Imp) Clone() *Imp {
 	}
 
 	// Deep copy ext
-	if i.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(i.Ext))
-		copy(clone.Ext, i.Ext)
-	}
+	clone.Ext = cloneRawMessage(i.Ext)
 
 	return &clone
 }

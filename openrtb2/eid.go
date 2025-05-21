@@ -53,10 +53,7 @@ func (e *EID) Clone() *EID {
 	}
 
 	// Deep copy ext
-	if e.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(e.Ext))
-		copy(clone.Ext, e.Ext)
-	}
+	clone.Ext = cloneRawMessage(e.Ext)
 
 	return &clone
 }

@@ -106,10 +106,7 @@ func (n *SupplyChainNode) Clone() *SupplyChainNode {
 	}
 
 	// Deep copy ext
-	if n.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(n.Ext))
-		copy(clone.Ext, n.Ext)
-	}
+	clone.Ext = cloneRawMessage(n.Ext)
 
 	return &clone
 }

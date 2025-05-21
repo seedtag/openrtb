@@ -155,10 +155,7 @@ func (u *User) Clone() *User {
 	}
 
 	// Deep copy ext
-	if u.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(u.Ext))
-		copy(clone.Ext, u.Ext)
-	}
+	clone.Ext = cloneRawMessage(u.Ext)
 
 	return &clone
 }

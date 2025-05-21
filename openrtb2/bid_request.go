@@ -362,10 +362,7 @@ func (br *BidRequest) Clone() *BidRequest {
 	}
 
 	// Deep copy ext
-	if br.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(br.Ext))
-		copy(clone.Ext, br.Ext)
-	}
+	clone.Ext = cloneRawMessage(br.Ext)
 
 	return &clone
 }

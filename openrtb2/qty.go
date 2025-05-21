@@ -59,10 +59,7 @@ func (q *Qty) Clone() *Qty {
 	clone := *q
 
 	// Deep copy ext
-	if q.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(q.Ext))
-		copy(clone.Ext, q.Ext)
-	}
+	clone.Ext = cloneRawMessage(q.Ext)
 
 	return &clone
 }

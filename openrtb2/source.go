@@ -76,10 +76,7 @@ func (s *Source) Clone() *Source {
 	}
 
 	// Deep copy ext
-	if s.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(s.Ext))
-		copy(clone.Ext, s.Ext)
-	}
+	clone.Ext = cloneRawMessage(s.Ext)
 
 	return &clone
 }

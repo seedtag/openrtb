@@ -51,10 +51,7 @@ func (r *RefSettings) Clone() *RefSettings {
 	clone := *r
 
 	// Deep copy ext
-	if r.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(r.Ext))
-		copy(clone.Ext, r.Ext)
-	}
+	clone.Ext = cloneRawMessage(r.Ext)
 
 	return &clone
 }

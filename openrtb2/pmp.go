@@ -53,10 +53,7 @@ func (p *PMP) Clone() *PMP {
 	}
 
 	// Deep copy ext
-	if p.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(p.Ext))
-		copy(clone.Ext, p.Ext)
-	}
+	clone.Ext = cloneRawMessage(p.Ext)
 
 	return &clone
 }

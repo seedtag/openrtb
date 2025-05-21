@@ -118,10 +118,7 @@ func (d *DOOH) Clone() *DOOH {
 	}
 
 	// Deep copy ext
-	if d.Ext != nil {
-		clone.Ext = make(json.RawMessage, len(d.Ext))
-		copy(clone.Ext, d.Ext)
-	}
+	clone.Ext = cloneRawMessage(d.Ext)
 
 	return &clone
 }
