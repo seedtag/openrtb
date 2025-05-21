@@ -36,3 +36,27 @@ type PMP struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the PMP object.
+func (p *PMP) Clone() *PMP {
+	if p == nil {
+		return nil
+	}
+	clone := *p
+
+	// Deep copy deals
+	if p.Deals != nil {
+		clone.Deals = make([]Deal, len(p.Deals))
+		for i := range p.Deals {
+			clone.Deals[i] = *p.Deals[i].Clone()
+		}
+	}
+
+	// Deep copy ext
+	if p.Ext != nil {
+		clone.Ext = make(json.RawMessage, len(p.Ext))
+		copy(clone.Ext, p.Ext)
+	}
+
+	return &clone
+}

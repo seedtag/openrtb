@@ -35,3 +35,20 @@ type BrandVersion struct {
 	//   Placeholder for advertising-system specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of BrandVersion
+func (b *BrandVersion) Clone() *BrandVersion {
+	if b == nil {
+		return nil
+	}
+
+	clone := *b
+
+	// Clone string slice
+	clone.Version = cloneStringSlice(b.Version)
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(b.Ext)
+
+	return &clone
+}

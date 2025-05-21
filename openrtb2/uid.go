@@ -38,3 +38,20 @@ type UID struct {
 	//   Placeholder for advertising-system specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the UID object.
+func (u *UID) Clone() *UID {
+	if u == nil {
+		return nil
+	}
+
+	clone := *u
+
+	// Deep copy ext
+	if u.Ext != nil {
+		clone.Ext = make(json.RawMessage, len(u.Ext))
+		copy(clone.Ext, u.Ext)
+	}
+
+	return &clone
+}

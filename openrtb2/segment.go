@@ -41,3 +41,17 @@ type Segment struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Segment
+func (s *Segment) Clone() *Segment {
+	if s == nil {
+		return nil
+	}
+
+	clone := *s
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(s.Ext)
+
+	return &clone
+}

@@ -263,3 +263,109 @@ type BidRequest struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the BidRequest object.
+func (br *BidRequest) Clone() *BidRequest {
+	if br == nil {
+		return nil
+	}
+
+	clone := *br
+
+	// Deep copy Imp slice
+	if br.Imp != nil {
+		clone.Imp = make([]Imp, len(br.Imp))
+		for i := range br.Imp {
+			clone.Imp[i] = *br.Imp[i].Clone()
+		}
+	}
+
+	// Deep copy Site
+	if br.Site != nil {
+		clone.Site = br.Site.Clone()
+	}
+
+	// Deep copy App
+	if br.App != nil {
+		clone.App = br.App.Clone()
+	}
+
+	// Deep copy DOOH
+	if br.DOOH != nil {
+		clone.DOOH = br.DOOH.Clone()
+	}
+
+	// Deep copy Device
+	if br.Device != nil {
+		clone.Device = br.Device.Clone()
+	}
+
+	// Deep copy User
+	if br.User != nil {
+		clone.User = br.User.Clone()
+	}
+
+	// Deep copy string slices
+	if br.WSeat != nil {
+		clone.WSeat = make([]string, len(br.WSeat))
+		copy(clone.WSeat, br.WSeat)
+	}
+
+	if br.BSeat != nil {
+		clone.BSeat = make([]string, len(br.BSeat))
+		copy(clone.BSeat, br.BSeat)
+	}
+
+	if br.Cur != nil {
+		clone.Cur = make([]string, len(br.Cur))
+		copy(clone.Cur, br.Cur)
+	}
+
+	if br.WLang != nil {
+		clone.WLang = make([]string, len(br.WLang))
+		copy(clone.WLang, br.WLang)
+	}
+
+	if br.WLangB != nil {
+		clone.WLangB = make([]string, len(br.WLangB))
+		copy(clone.WLangB, br.WLangB)
+	}
+
+	if br.ACat != nil {
+		clone.ACat = make([]string, len(br.ACat))
+		copy(clone.ACat, br.ACat)
+	}
+
+	if br.BCat != nil {
+		clone.BCat = make([]string, len(br.BCat))
+		copy(clone.BCat, br.BCat)
+	}
+
+	if br.BAdv != nil {
+		clone.BAdv = make([]string, len(br.BAdv))
+		copy(clone.BAdv, br.BAdv)
+	}
+
+	if br.BApp != nil {
+		clone.BApp = make([]string, len(br.BApp))
+		copy(clone.BApp, br.BApp)
+	}
+
+	// Deep copy Source
+	if br.Source != nil {
+		clone.Source = br.Source.Clone()
+	}
+
+	// Deep copy Regs
+	if br.Regs != nil {
+		clone.Regs = br.Regs.Clone()
+	}
+
+	// Deep copy ext
+	if br.Ext != nil {
+		clone.Ext = make(json.RawMessage, len(br.Ext))
+		copy(clone.Ext, br.Ext)
+	}
+
+	return &clone
+}

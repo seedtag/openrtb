@@ -118,3 +118,47 @@ type User struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the User object.
+func (u *User) Clone() *User {
+	if u == nil {
+		return nil
+	}
+
+	clone := *u
+
+	// Deep copy KwArray
+	if u.KwArray != nil {
+		clone.KwArray = make([]string, len(u.KwArray))
+		copy(clone.KwArray, u.KwArray)
+	}
+
+	// Deep copy Geo
+	if u.Geo != nil {
+		clone.Geo = u.Geo.Clone()
+	}
+
+	// Deep copy Data
+	if u.Data != nil {
+		clone.Data = make([]Data, len(u.Data))
+		for i := range u.Data {
+			clone.Data[i] = *u.Data[i].Clone()
+		}
+	}
+
+	// Deep copy EIDs
+	if u.EIDs != nil {
+		clone.EIDs = make([]EID, len(u.EIDs))
+		for i := range u.EIDs {
+			clone.EIDs[i] = *u.EIDs[i].Clone()
+		}
+	}
+
+	// Deep copy ext
+	if u.Ext != nil {
+		clone.Ext = make(json.RawMessage, len(u.Ext))
+		copy(clone.Ext, u.Ext)
+	}
+
+	return &clone
+}

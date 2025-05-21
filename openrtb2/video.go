@@ -400,3 +400,94 @@ type Video struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Video
+func (v *Video) Clone() *Video {
+	if v == nil {
+		return nil
+	}
+
+	clone := *v
+
+	// Clone string slices
+	clone.MIMEs = cloneStringSlice(v.MIMEs)
+
+	// Clone pointer fields
+	clone.StartDelay = cloneStartDelayPtr(v.StartDelay)
+	clone.W = cloneInt64Ptr(v.W)
+	clone.H = cloneInt64Ptr(v.H)
+	clone.Skip = cloneInt8Ptr(v.Skip)
+	clone.BoxingAllowed = cloneInt8Ptr(v.BoxingAllowed)
+	clone.Pos = clonePlacementPositionPtr(v.Pos)
+
+	// Clone integer slices
+	if v.RqdDurs != nil {
+		clone.RqdDurs = make([]int64, len(v.RqdDurs))
+		copy(clone.RqdDurs, v.RqdDurs)
+	}
+
+	// Clone adcom1 type slices
+	if v.Protocols != nil {
+		clone.Protocols = make([]adcom1.MediaCreativeSubtype, len(v.Protocols))
+		copy(clone.Protocols, v.Protocols)
+	}
+
+	if v.BAttr != nil {
+		clone.BAttr = make([]adcom1.CreativeAttribute, len(v.BAttr))
+		copy(clone.BAttr, v.BAttr)
+	}
+
+	if v.PlaybackMethod != nil {
+		clone.PlaybackMethod = make([]adcom1.PlaybackMethod, len(v.PlaybackMethod))
+		copy(clone.PlaybackMethod, v.PlaybackMethod)
+	}
+
+	if v.Delivery != nil {
+		clone.Delivery = make([]adcom1.DeliveryMethod, len(v.Delivery))
+		copy(clone.Delivery, v.Delivery)
+	}
+
+	if v.API != nil {
+		clone.API = make([]adcom1.APIFramework, len(v.API))
+		copy(clone.API, v.API)
+	}
+
+	if v.CompanionType != nil {
+		clone.CompanionType = make([]adcom1.CompanionType, len(v.CompanionType))
+		copy(clone.CompanionType, v.CompanionType)
+	}
+
+	if v.PodDedupe != nil {
+		clone.PodDedupe = make([]adcom1.PodDedupe, len(v.PodDedupe))
+		copy(clone.PodDedupe, v.PodDedupe)
+	}
+
+	// Clone Banner slice with deep copy
+	if v.CompanionAd != nil {
+		clone.CompanionAd = make([]Banner, len(v.CompanionAd))
+		for i := range v.CompanionAd {
+			clone.CompanionAd[i] = *v.CompanionAd[i].Clone()
+		}
+	}
+
+	// Clone DurFloors slice
+	if v.DurFloors != nil {
+		clone.DurFloors = make([]DurFloors, len(v.DurFloors))
+		for i := range v.DurFloors {
+			clone.DurFloors[i] = *v.DurFloors[i].Clone()
+		}
+	}
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(v.Ext)
+
+	return &clone
+}
+
+func cloneStartDelayPtr(s *adcom1.StartDelay) *adcom1.StartDelay {
+	if s == nil {
+		return nil
+	}
+	clone := *s
+	return &clone
+}

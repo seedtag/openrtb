@@ -30,3 +30,34 @@ type Refresh struct {
 	//   Placeholder for vendor specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the Refresh object.
+func (r *Refresh) Clone() *Refresh {
+	if r == nil {
+		return nil
+	}
+
+	clone := *r
+
+	// Deep copy RefSettings
+	if r.RefSettings != nil {
+		clone.RefSettings = make([]RefSettings, len(r.RefSettings))
+		for i := range r.RefSettings {
+			clone.RefSettings[i] = *r.RefSettings[i].Clone()
+		}
+	}
+
+	// Deep copy Count
+	if r.Count != nil {
+		count := *r.Count
+		clone.Count = &count
+	}
+
+	// Deep copy ext
+	if r.Ext != nil {
+		clone.Ext = make(json.RawMessage, len(r.Ext))
+		copy(clone.Ext, r.Ext)
+	}
+
+	return &clone
+}

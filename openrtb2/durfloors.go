@@ -51,3 +51,13 @@ type DurFloors struct {
 	//   Placeholder for vendor specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of DurFloors
+func (d *DurFloors) Clone() *DurFloors {
+	if d == nil {
+		return nil
+	}
+	clone := *d
+	clone.Ext = cloneRawMessage(d.Ext)
+	return &clone
+}

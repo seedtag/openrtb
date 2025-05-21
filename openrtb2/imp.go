@@ -235,3 +235,81 @@ type Imp struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the Imp object.
+func (i *Imp) Clone() *Imp {
+	if i == nil {
+		return nil
+	}
+
+	clone := *i
+
+	// Deep copy Metric slice
+	if i.Metric != nil {
+		clone.Metric = make([]Metric, len(i.Metric))
+		for j := range i.Metric {
+			clone.Metric[j] = *i.Metric[j].Clone()
+		}
+	}
+
+	// Deep copy Banner
+	if i.Banner != nil {
+		clone.Banner = i.Banner.Clone()
+	}
+
+	// Deep copy Video
+	if i.Video != nil {
+		clone.Video = i.Video.Clone()
+	}
+
+	// Deep copy Audio
+	if i.Audio != nil {
+		clone.Audio = i.Audio.Clone()
+	}
+
+	// Deep copy Native
+	if i.Native != nil {
+		clone.Native = i.Native.Clone()
+	}
+
+	// Deep copy PMP
+	if i.PMP != nil {
+		clone.PMP = i.PMP.Clone()
+	}
+
+	// Deep copy ClickBrowser
+	if i.ClickBrowser != nil {
+		cb := *i.ClickBrowser
+		clone.ClickBrowser = &cb
+	}
+
+	// Deep copy Secure
+	if i.Secure != nil {
+		s := *i.Secure
+		clone.Secure = &s
+	}
+
+	// Deep copy IframeBuster slice
+	if i.IframeBuster != nil {
+		clone.IframeBuster = make([]string, len(i.IframeBuster))
+		copy(clone.IframeBuster, i.IframeBuster)
+	}
+
+	// Deep copy Qty
+	if i.Qty != nil {
+		clone.Qty = i.Qty.Clone()
+	}
+
+	// Deep copy Refresh
+	if i.Refresh != nil {
+		clone.Refresh = i.Refresh.Clone()
+	}
+
+	// Deep copy ext
+	if i.Ext != nil {
+		clone.Ext = make(json.RawMessage, len(i.Ext))
+		copy(clone.Ext, i.Ext)
+	}
+
+	return &clone
+}
