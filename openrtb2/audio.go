@@ -274,7 +274,6 @@ type Audio struct {
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
 
-// Clone returns a deep copy of Audio
 func (a *Audio) Clone() *Audio {
 	if a == nil {
 		return nil
@@ -282,21 +281,17 @@ func (a *Audio) Clone() *Audio {
 
 	clone := *a
 
-	// Clone string slices
 	clone.MIMEs = cloneStringSlice(a.MIMEs)
 
-	// Clone integer slices
 	if a.RqdDurs != nil {
 		clone.RqdDurs = make([]int64, len(a.RqdDurs))
 		copy(clone.RqdDurs, a.RqdDurs)
 	}
 
-	// Clone pointer fields
 	clone.StartDelay = cloneStartDelayPtr(a.StartDelay)
 	clone.Stitched = cloneInt8Ptr(a.Stitched)
 	clone.NVol = cloneVolumeModePtr(a.NVol)
 
-	// Clone adcom1 type slices
 	if a.Protocols != nil {
 		clone.Protocols = make([]adcom1.MediaCreativeSubtype, len(a.Protocols))
 		copy(clone.Protocols, a.Protocols)
@@ -322,7 +317,6 @@ func (a *Audio) Clone() *Audio {
 		copy(clone.CompanionType, a.CompanionType)
 	}
 
-	// Clone Banner slice with deep copy
 	if a.CompanionAd != nil {
 		clone.CompanionAd = make([]Banner, len(a.CompanionAd))
 		for i := range a.CompanionAd {
@@ -330,7 +324,6 @@ func (a *Audio) Clone() *Audio {
 		}
 	}
 
-	// Clone DurFloors slice
 	if a.DurFloors != nil {
 		clone.DurFloors = make([]DurFloors, len(a.DurFloors))
 		for i := range a.DurFloors {
@@ -338,7 +331,6 @@ func (a *Audio) Clone() *Audio {
 		}
 	}
 
-	// Clone extension
 	clone.Ext = cloneRawMessage(a.Ext)
 
 	return &clone

@@ -236,7 +236,6 @@ type Imp struct {
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
 
-// Clone returns a deep copy of the Imp object.
 func (i *Imp) Clone() *Imp {
 	if i == nil {
 		return nil
@@ -244,7 +243,6 @@ func (i *Imp) Clone() *Imp {
 
 	clone := *i
 
-	// Deep copy Metric slice
 	if i.Metric != nil {
 		clone.Metric = make([]Metric, len(i.Metric))
 		for j := range i.Metric {
@@ -252,60 +250,18 @@ func (i *Imp) Clone() *Imp {
 		}
 	}
 
-	// Deep copy Banner
-	if i.Banner != nil {
-		clone.Banner = i.Banner.Clone()
-	}
+	clone.Banner = i.Banner.Clone()
+	clone.Video = i.Video.Clone()
+	clone.Audio = i.Audio.Clone()
+	clone.Native = i.Native.Clone()
+	clone.PMP = i.PMP.Clone()
+	clone.Qty = i.Qty.Clone()
+	clone.Refresh = i.Refresh.Clone()
 
-	// Deep copy Video
-	if i.Video != nil {
-		clone.Video = i.Video.Clone()
-	}
+	clone.ClickBrowser = cloneInt8Ptr(i.ClickBrowser)
+	clone.Secure = cloneInt8Ptr(i.Secure)
+	clone.IframeBuster = cloneStringSlice(i.IframeBuster)
 
-	// Deep copy Audio
-	if i.Audio != nil {
-		clone.Audio = i.Audio.Clone()
-	}
-
-	// Deep copy Native
-	if i.Native != nil {
-		clone.Native = i.Native.Clone()
-	}
-
-	// Deep copy PMP
-	if i.PMP != nil {
-		clone.PMP = i.PMP.Clone()
-	}
-
-	// Deep copy ClickBrowser
-	if i.ClickBrowser != nil {
-		cb := *i.ClickBrowser
-		clone.ClickBrowser = &cb
-	}
-
-	// Deep copy Secure
-	if i.Secure != nil {
-		s := *i.Secure
-		clone.Secure = &s
-	}
-
-	// Deep copy IframeBuster slice
-	if i.IframeBuster != nil {
-		clone.IframeBuster = make([]string, len(i.IframeBuster))
-		copy(clone.IframeBuster, i.IframeBuster)
-	}
-
-	// Deep copy Qty
-	if i.Qty != nil {
-		clone.Qty = i.Qty.Clone()
-	}
-
-	// Deep copy Refresh
-	if i.Refresh != nil {
-		clone.Refresh = i.Refresh.Clone()
-	}
-
-	// Deep copy ext
 	clone.Ext = cloneRawMessage(i.Ext)
 
 	return &clone

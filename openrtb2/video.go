@@ -401,7 +401,6 @@ type Video struct {
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
 
-// Clone returns a deep copy of Video
 func (v *Video) Clone() *Video {
 	if v == nil {
 		return nil
@@ -409,10 +408,8 @@ func (v *Video) Clone() *Video {
 
 	clone := *v
 
-	// Clone string slices
 	clone.MIMEs = cloneStringSlice(v.MIMEs)
 
-	// Clone pointer fields
 	clone.StartDelay = cloneStartDelayPtr(v.StartDelay)
 	clone.W = cloneInt64Ptr(v.W)
 	clone.H = cloneInt64Ptr(v.H)
@@ -420,13 +417,11 @@ func (v *Video) Clone() *Video {
 	clone.BoxingAllowed = cloneInt8Ptr(v.BoxingAllowed)
 	clone.Pos = clonePlacementPositionPtr(v.Pos)
 
-	// Clone integer slices
 	if v.RqdDurs != nil {
 		clone.RqdDurs = make([]int64, len(v.RqdDurs))
 		copy(clone.RqdDurs, v.RqdDurs)
 	}
 
-	// Clone adcom1 type slices
 	if v.Protocols != nil {
 		clone.Protocols = make([]adcom1.MediaCreativeSubtype, len(v.Protocols))
 		copy(clone.Protocols, v.Protocols)
@@ -462,7 +457,6 @@ func (v *Video) Clone() *Video {
 		copy(clone.PodDedupe, v.PodDedupe)
 	}
 
-	// Clone Banner slice with deep copy
 	if v.CompanionAd != nil {
 		clone.CompanionAd = make([]Banner, len(v.CompanionAd))
 		for i := range v.CompanionAd {
@@ -470,7 +464,6 @@ func (v *Video) Clone() *Video {
 		}
 	}
 
-	// Clone DurFloors slice
 	if v.DurFloors != nil {
 		clone.DurFloors = make([]DurFloors, len(v.DurFloors))
 		for i := range v.DurFloors {
@@ -478,7 +471,6 @@ func (v *Video) Clone() *Video {
 		}
 	}
 
-	// Clone extension
 	clone.Ext = cloneRawMessage(v.Ext)
 
 	return &clone

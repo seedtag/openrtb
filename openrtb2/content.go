@@ -284,7 +284,6 @@ type Content struct {
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
 
-// Clone returns a deep copy of Content
 func (c *Content) Clone() *Content {
 	if c == nil {
 		return nil
@@ -292,21 +291,17 @@ func (c *Content) Clone() *Content {
 
 	clone := *c
 
-	// Clone pointer fields
 	clone.ProdQ = cloneProductionQualityPtr(c.ProdQ)
 	clone.VideoQuality = cloneProductionQualityPtr(c.VideoQuality)
 	clone.LiveStream = cloneInt8Ptr(c.LiveStream)
 	clone.SourceRelationship = cloneInt8Ptr(c.SourceRelationship)
 	clone.Embeddable = cloneInt8Ptr(c.Embeddable)
 
-	// Clone string slice fields
 	clone.Cat = cloneStringSlice(c.Cat)
 	clone.KwArray = cloneStringSlice(c.KwArray)
 
-	// Clone pointer objects
 	clone.Producer = c.Producer.Clone()
 
-	// Clone Data slice
 	if c.Data != nil {
 		clone.Data = make([]Data, len(c.Data))
 		for i := range c.Data {
@@ -314,11 +309,9 @@ func (c *Content) Clone() *Content {
 		}
 	}
 
-	// Clone Network and Channel
 	clone.Network = c.Network.Clone()
 	clone.Channel = c.Channel.Clone()
 
-	// Clone extension
 	clone.Ext = cloneRawMessage(c.Ext)
 
 	return &clone

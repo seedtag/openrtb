@@ -325,7 +325,6 @@ type Device struct {
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
 
-// Clone returns a deep copy of Device
 func (d *Device) Clone() *Device {
 	if d == nil {
 		return nil
@@ -333,18 +332,15 @@ func (d *Device) Clone() *Device {
 
 	clone := *d
 
-	// Clone pointer fields
 	clone.DNT = cloneInt8Ptr(d.DNT)
 	clone.Lmt = cloneInt8Ptr(d.Lmt)
 	clone.JS = cloneInt8Ptr(d.JS)
 	clone.GeoFetch = cloneInt8Ptr(d.GeoFetch)
 	clone.ConnectionType = cloneConnectionTypePtr(d.ConnectionType)
 
-	// Clone pointer objects
 	clone.Geo = d.Geo.Clone()
 	clone.SUA = d.SUA.Clone()
 
-	// Clone extension
 	clone.Ext = cloneRawMessage(d.Ext)
 
 	return &clone

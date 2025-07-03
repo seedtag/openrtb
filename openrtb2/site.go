@@ -176,7 +176,6 @@ type Site struct {
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
 
-// Clone returns a deep copy of Site
 func (s *Site) Clone() *Site {
 	if s == nil {
 		return nil
@@ -184,21 +183,17 @@ func (s *Site) Clone() *Site {
 
 	clone := *s
 
-	// Clone pointer fields
 	clone.Mobile = cloneInt8Ptr(s.Mobile)
 	clone.PrivacyPolicy = cloneInt8Ptr(s.PrivacyPolicy)
 
-	// Clone string slices
 	clone.Cat = cloneStringSlice(s.Cat)
 	clone.SectionCat = cloneStringSlice(s.SectionCat)
 	clone.PageCat = cloneStringSlice(s.PageCat)
 	clone.KwArray = cloneStringSlice(s.KwArray)
 
-	// Clone pointer objects
 	clone.Publisher = s.Publisher.Clone()
 	clone.Content = s.Content.Clone()
 
-	// Clone extension
 	clone.Ext = cloneRawMessage(s.Ext)
 
 	return &clone
