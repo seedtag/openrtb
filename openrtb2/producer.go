@@ -67,3 +67,20 @@ type Producer struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Producer
+func (p *Producer) Clone() *Producer {
+	if p == nil {
+		return nil
+	}
+
+	clone := *p
+
+	// Clone string slice
+	clone.Cat = cloneStringSlice(p.Cat)
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(p.Ext)
+
+	return &clone
+}

@@ -50,3 +50,25 @@ type SupplyChain struct {
 	//   Placeholder for advertising-system specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the SupplyChain object.
+func (s *SupplyChain) Clone() *SupplyChain {
+	if s == nil {
+		return nil
+	}
+
+	clone := *s
+
+	// Deep copy nodes
+	if s.Nodes != nil {
+		clone.Nodes = make([]SupplyChainNode, len(s.Nodes))
+		for i := range s.Nodes {
+			clone.Nodes[i] = *s.Nodes[i].Clone()
+		}
+	}
+
+	// Deep copy ext
+	clone.Ext = cloneRawMessage(s.Ext)
+
+	return &clone
+}

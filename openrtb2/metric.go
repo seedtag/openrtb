@@ -46,3 +46,17 @@ type Metric struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Metric
+func (m *Metric) Clone() *Metric {
+	if m == nil {
+		return nil
+	}
+
+	clone := *m
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(m.Ext)
+
+	return &clone
+}

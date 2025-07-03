@@ -67,3 +67,29 @@ type Regs struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the Regs object.
+func (r *Regs) Clone() *Regs {
+	if r == nil {
+		return nil
+	}
+
+	clone := *r
+
+	// Deep copy GDPR
+	if r.GDPR != nil {
+		gdpr := *r.GDPR
+		clone.GDPR = &gdpr
+	}
+
+	// Deep copy GPPSID
+	if r.GPPSID != nil {
+		clone.GPPSID = make([]int8, len(r.GPPSID))
+		copy(clone.GPPSID, r.GPPSID)
+	}
+
+	// Deep copy ext
+	clone.Ext = cloneRawMessage(r.Ext)
+
+	return &clone
+}

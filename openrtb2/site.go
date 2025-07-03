@@ -175,3 +175,26 @@ type Site struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (s *Site) Clone() *Site {
+	if s == nil {
+		return nil
+	}
+
+	clone := *s
+
+	clone.Mobile = cloneInt8Ptr(s.Mobile)
+	clone.PrivacyPolicy = cloneInt8Ptr(s.PrivacyPolicy)
+
+	clone.Cat = cloneStringSlice(s.Cat)
+	clone.SectionCat = cloneStringSlice(s.SectionCat)
+	clone.PageCat = cloneStringSlice(s.PageCat)
+	clone.KwArray = cloneStringSlice(s.KwArray)
+
+	clone.Publisher = s.Publisher.Clone()
+	clone.Content = s.Content.Clone()
+
+	clone.Ext = cloneRawMessage(s.Ext)
+
+	return &clone
+}

@@ -263,3 +263,40 @@ type BidRequest struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (br *BidRequest) Clone() *BidRequest {
+	if br == nil {
+		return nil
+	}
+
+	clone := *br
+
+	if br.Imp != nil {
+		clone.Imp = make([]Imp, len(br.Imp))
+		for i := range br.Imp {
+			clone.Imp[i] = *br.Imp[i].Clone()
+		}
+	}
+
+	clone.Site = br.Site.Clone()
+	clone.App = br.App.Clone()
+	clone.DOOH = br.DOOH.Clone()
+	clone.Device = br.Device.Clone()
+	clone.User = br.User.Clone()
+	clone.Source = br.Source.Clone()
+	clone.Regs = br.Regs.Clone()
+
+	clone.WSeat = cloneStringSlice(br.WSeat)
+	clone.BSeat = cloneStringSlice(br.BSeat)
+	clone.Cur = cloneStringSlice(br.Cur)
+	clone.WLang = cloneStringSlice(br.WLang)
+	clone.WLangB = cloneStringSlice(br.WLangB)
+	clone.ACat = cloneStringSlice(br.ACat)
+	clone.BCat = cloneStringSlice(br.BCat)
+	clone.BAdv = cloneStringSlice(br.BAdv)
+	clone.BApp = cloneStringSlice(br.BApp)
+
+	clone.Ext = cloneRawMessage(br.Ext)
+
+	return &clone
+}

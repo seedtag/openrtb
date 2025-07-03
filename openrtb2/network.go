@@ -47,3 +47,17 @@ type Network struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Network
+func (n *Network) Clone() *Network {
+	if n == nil {
+		return nil
+	}
+
+	clone := *n
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(n.Ext)
+
+	return &clone
+}

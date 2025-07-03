@@ -43,3 +43,25 @@ type Data struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Data
+func (d *Data) Clone() *Data {
+	if d == nil {
+		return nil
+	}
+
+	clone := *d
+
+	// Clone segments
+	if d.Segment != nil {
+		clone.Segment = make([]Segment, len(d.Segment))
+		for i := range d.Segment {
+			clone.Segment[i] = *d.Segment[i].Clone()
+		}
+	}
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(d.Ext)
+
+	return &clone
+}

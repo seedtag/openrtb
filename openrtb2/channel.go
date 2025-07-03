@@ -47,3 +47,17 @@ type Channel struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Channel
+func (c *Channel) Clone() *Channel {
+	if c == nil {
+		return nil
+	}
+
+	clone := *c
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(c.Ext)
+
+	return &clone
+}

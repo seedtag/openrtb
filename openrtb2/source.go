@@ -55,3 +55,28 @@ type Source struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the Source object.
+func (s *Source) Clone() *Source {
+	if s == nil {
+		return nil
+	}
+
+	clone := *s
+
+	// Deep copy FD
+	if s.FD != nil {
+		fd := *s.FD
+		clone.FD = &fd
+	}
+
+	// Deep copy SChain
+	if s.SChain != nil {
+		clone.SChain = s.SChain.Clone()
+	}
+
+	// Deep copy ext
+	clone.Ext = cloneRawMessage(s.Ext)
+
+	return &clone
+}

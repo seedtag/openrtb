@@ -88,3 +88,31 @@ type UserAgent struct {
 	//   Placeholder for advertising-system specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of UserAgent
+func (u *UserAgent) Clone() *UserAgent {
+	if u == nil {
+		return nil
+	}
+
+	clone := *u
+
+	// Clone BrandVersion slice
+	if u.Browsers != nil {
+		clone.Browsers = make([]BrandVersion, len(u.Browsers))
+		for i := range u.Browsers {
+			clone.Browsers[i] = *u.Browsers[i].Clone()
+		}
+	}
+
+	// Clone Platform
+	clone.Platform = u.Platform.Clone()
+
+	// Clone pointer fields
+	clone.Mobile = cloneInt8Ptr(u.Mobile)
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(u.Ext)
+
+	return &clone
+}

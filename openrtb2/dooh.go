@@ -87,3 +87,38 @@ type DOOH struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the DOOH object.
+func (d *DOOH) Clone() *DOOH {
+	if d == nil {
+		return nil
+	}
+	clone := *d
+
+	// Deep copy venue type slice
+	if d.VenueType != nil {
+		clone.VenueType = make([]string, len(d.VenueType))
+		copy(clone.VenueType, d.VenueType)
+	}
+
+	// Deep copy venue type taxonomy
+	if d.VenueTypeTax != nil {
+		tax := *d.VenueTypeTax
+		clone.VenueTypeTax = &tax
+	}
+
+	// Deep copy publisher
+	if d.Publisher != nil {
+		clone.Publisher = d.Publisher.Clone()
+	}
+
+	// Deep copy content
+	if d.Content != nil {
+		clone.Content = d.Content.Clone()
+	}
+
+	// Deep copy ext
+	clone.Ext = cloneRawMessage(d.Ext)
+
+	return &clone
+}

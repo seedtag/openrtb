@@ -333,3 +333,32 @@ type Device struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (d *Device) Clone() *Device {
+	if d == nil {
+		return nil
+	}
+
+	clone := *d
+
+	clone.DNT = cloneInt8Ptr(d.DNT)
+	clone.Lmt = cloneInt8Ptr(d.Lmt)
+	clone.JS = cloneInt8Ptr(d.JS)
+	clone.GeoFetch = cloneInt8Ptr(d.GeoFetch)
+	clone.ConnectionType = cloneConnectionTypePtr(d.ConnectionType)
+
+	clone.Geo = d.Geo.Clone()
+	clone.SUA = d.SUA.Clone()
+
+	clone.Ext = cloneRawMessage(d.Ext)
+
+	return &clone
+}
+
+func cloneConnectionTypePtr(c *adcom1.ConnectionType) *adcom1.ConnectionType {
+	if c == nil {
+		return nil
+	}
+	clone := *c
+	return &clone
+}
