@@ -178,3 +178,26 @@ type App struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (a *App) Clone() *App {
+	if a == nil {
+		return nil
+	}
+
+	clone := *a
+
+	clone.PrivacyPolicy = cloneInt8Ptr(a.PrivacyPolicy)
+	clone.Paid = cloneInt8Ptr(a.Paid)
+
+	clone.Cat = cloneStringSlice(a.Cat)
+	clone.SectionCat = cloneStringSlice(a.SectionCat)
+	clone.PageCat = cloneStringSlice(a.PageCat)
+	clone.KwArray = cloneStringSlice(a.KwArray)
+
+	clone.Publisher = a.Publisher.Clone()
+	clone.Content = a.Content.Clone()
+
+	clone.Ext = cloneRawMessage(a.Ext)
+
+	return &clone
+}

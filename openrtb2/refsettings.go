@@ -41,3 +41,17 @@ type RefSettings struct {
 	//   Placeholder for vendor specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the RefSettings object.
+func (r *RefSettings) Clone() *RefSettings {
+	if r == nil {
+		return nil
+	}
+
+	clone := *r
+
+	// Deep copy ext
+	clone.Ext = cloneRawMessage(r.Ext)
+
+	return &clone
+}

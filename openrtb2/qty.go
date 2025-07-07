@@ -49,3 +49,17 @@ type Qty struct {
 	//   Placeholder for vendor specific extensions to this object.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of the Qty object.
+func (q *Qty) Clone() *Qty {
+	if q == nil {
+		return nil
+	}
+
+	clone := *q
+
+	// Deep copy ext
+	clone.Ext = cloneRawMessage(q.Ext)
+
+	return &clone
+}

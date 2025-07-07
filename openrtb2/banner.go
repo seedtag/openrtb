@@ -180,3 +180,62 @@ type Banner struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Banner
+func (b *Banner) Clone() *Banner {
+	if b == nil {
+		return nil
+	}
+
+	clone := *b
+
+	// Clone Format slice
+	if b.Format != nil {
+		clone.Format = make([]Format, len(b.Format))
+		for i := range b.Format {
+			clone.Format[i] = *b.Format[i].Clone()
+		}
+	}
+
+	// Clone pointer fields
+	clone.W = cloneInt64Ptr(b.W)
+	clone.H = cloneInt64Ptr(b.H)
+	clone.Pos = clonePlacementPositionPtr(b.Pos)
+	clone.Vcm = cloneInt8Ptr(b.Vcm)
+
+	// Clone slices using make and copy for better performance
+	if b.BType != nil {
+		clone.BType = make([]BannerAdType, len(b.BType))
+		copy(clone.BType, b.BType)
+	}
+
+	if b.BAttr != nil {
+		clone.BAttr = make([]adcom1.CreativeAttribute, len(b.BAttr))
+		copy(clone.BAttr, b.BAttr)
+	}
+
+	clone.MIMEs = cloneStringSlice(b.MIMEs)
+
+	if b.ExpDir != nil {
+		clone.ExpDir = make([]adcom1.ExpandableDirection, len(b.ExpDir))
+		copy(clone.ExpDir, b.ExpDir)
+	}
+
+	if b.API != nil {
+		clone.API = make([]adcom1.APIFramework, len(b.API))
+		copy(clone.API, b.API)
+	}
+
+	// Clone RawMessage
+	clone.Ext = cloneRawMessage(b.Ext)
+
+	return &clone
+}
+
+func clonePlacementPositionPtr(p *adcom1.PlacementPosition) *adcom1.PlacementPosition {
+	if p == nil {
+		return nil
+	}
+	clone := *p
+	return &clone
+}

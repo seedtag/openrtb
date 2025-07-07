@@ -81,3 +81,28 @@ type Native struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Native
+func (n *Native) Clone() *Native {
+	if n == nil {
+		return nil
+	}
+
+	clone := *n
+
+	// Clone slices
+	if n.API != nil {
+		clone.API = make([]adcom1.APIFramework, len(n.API))
+		copy(clone.API, n.API)
+	}
+
+	if n.BAttr != nil {
+		clone.BAttr = make([]adcom1.CreativeAttribute, len(n.BAttr))
+		copy(clone.BAttr, n.BAttr)
+	}
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(n.Ext)
+
+	return &clone
+}

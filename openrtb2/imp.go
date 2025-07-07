@@ -235,3 +235,34 @@ type Imp struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (i *Imp) Clone() *Imp {
+	if i == nil {
+		return nil
+	}
+
+	clone := *i
+
+	if i.Metric != nil {
+		clone.Metric = make([]Metric, len(i.Metric))
+		for j := range i.Metric {
+			clone.Metric[j] = *i.Metric[j].Clone()
+		}
+	}
+
+	clone.Banner = i.Banner.Clone()
+	clone.Video = i.Video.Clone()
+	clone.Audio = i.Audio.Clone()
+	clone.Native = i.Native.Clone()
+	clone.PMP = i.PMP.Clone()
+	clone.Qty = i.Qty.Clone()
+	clone.Refresh = i.Refresh.Clone()
+
+	clone.ClickBrowser = cloneInt8Ptr(i.ClickBrowser)
+	clone.Secure = cloneInt8Ptr(i.Secure)
+	clone.IframeBuster = cloneStringSlice(i.IframeBuster)
+
+	clone.Ext = cloneRawMessage(i.Ext)
+
+	return &clone
+}

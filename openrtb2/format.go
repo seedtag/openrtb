@@ -58,3 +58,15 @@ type Format struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Format
+func (f *Format) Clone() *Format {
+	if f == nil {
+		return nil
+	}
+
+	clone := *f
+	clone.Ext = cloneRawMessage(f.Ext)
+
+	return &clone
+}

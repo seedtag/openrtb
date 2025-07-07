@@ -142,3 +142,21 @@ type Geo struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Geo
+func (g *Geo) Clone() *Geo {
+	if g == nil {
+		return nil
+	}
+
+	clone := *g
+
+	// Clone float64 pointers
+	clone.Lat = cloneFloat64Ptr(g.Lat)
+	clone.Lon = cloneFloat64Ptr(g.Lon)
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(g.Ext)
+
+	return &clone
+}

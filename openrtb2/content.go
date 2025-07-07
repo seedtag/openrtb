@@ -283,3 +283,44 @@ type Content struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (c *Content) Clone() *Content {
+	if c == nil {
+		return nil
+	}
+
+	clone := *c
+
+	clone.ProdQ = cloneProductionQualityPtr(c.ProdQ)
+	clone.VideoQuality = cloneProductionQualityPtr(c.VideoQuality)
+	clone.LiveStream = cloneInt8Ptr(c.LiveStream)
+	clone.SourceRelationship = cloneInt8Ptr(c.SourceRelationship)
+	clone.Embeddable = cloneInt8Ptr(c.Embeddable)
+
+	clone.Cat = cloneStringSlice(c.Cat)
+	clone.KwArray = cloneStringSlice(c.KwArray)
+
+	clone.Producer = c.Producer.Clone()
+
+	if c.Data != nil {
+		clone.Data = make([]Data, len(c.Data))
+		for i := range c.Data {
+			clone.Data[i] = *c.Data[i].Clone()
+		}
+	}
+
+	clone.Network = c.Network.Clone()
+	clone.Channel = c.Channel.Clone()
+
+	clone.Ext = cloneRawMessage(c.Ext)
+
+	return &clone
+}
+
+func cloneProductionQualityPtr(p *adcom1.ProductionQuality) *adcom1.ProductionQuality {
+	if p == nil {
+		return nil
+	}
+	clone := *p
+	return &clone
+}

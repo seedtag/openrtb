@@ -273,3 +273,73 @@ type Audio struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+func (a *Audio) Clone() *Audio {
+	if a == nil {
+		return nil
+	}
+
+	clone := *a
+
+	clone.MIMEs = cloneStringSlice(a.MIMEs)
+
+	if a.RqdDurs != nil {
+		clone.RqdDurs = make([]int64, len(a.RqdDurs))
+		copy(clone.RqdDurs, a.RqdDurs)
+	}
+
+	clone.StartDelay = cloneStartDelayPtr(a.StartDelay)
+	clone.Stitched = cloneInt8Ptr(a.Stitched)
+	clone.NVol = cloneVolumeModePtr(a.NVol)
+
+	if a.Protocols != nil {
+		clone.Protocols = make([]adcom1.MediaCreativeSubtype, len(a.Protocols))
+		copy(clone.Protocols, a.Protocols)
+	}
+
+	if a.BAttr != nil {
+		clone.BAttr = make([]adcom1.CreativeAttribute, len(a.BAttr))
+		copy(clone.BAttr, a.BAttr)
+	}
+
+	if a.Delivery != nil {
+		clone.Delivery = make([]adcom1.DeliveryMethod, len(a.Delivery))
+		copy(clone.Delivery, a.Delivery)
+	}
+
+	if a.API != nil {
+		clone.API = make([]adcom1.APIFramework, len(a.API))
+		copy(clone.API, a.API)
+	}
+
+	if a.CompanionType != nil {
+		clone.CompanionType = make([]adcom1.CompanionType, len(a.CompanionType))
+		copy(clone.CompanionType, a.CompanionType)
+	}
+
+	if a.CompanionAd != nil {
+		clone.CompanionAd = make([]Banner, len(a.CompanionAd))
+		for i := range a.CompanionAd {
+			clone.CompanionAd[i] = *a.CompanionAd[i].Clone()
+		}
+	}
+
+	if a.DurFloors != nil {
+		clone.DurFloors = make([]DurFloors, len(a.DurFloors))
+		for i := range a.DurFloors {
+			clone.DurFloors[i] = *a.DurFloors[i].Clone()
+		}
+	}
+
+	clone.Ext = cloneRawMessage(a.Ext)
+
+	return &clone
+}
+
+func cloneVolumeModePtr(v *adcom1.VolumeNormalizationMode) *adcom1.VolumeNormalizationMode {
+	if v == nil {
+		return nil
+	}
+	clone := *v
+	return &clone
+}

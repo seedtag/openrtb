@@ -110,3 +110,29 @@ type Deal struct {
 	//   Placeholder for exchange-specific extensions to OpenRTB.
 	Ext json.RawMessage `json:"ext,omitempty"`
 }
+
+// Clone returns a deep copy of Deal
+func (d *Deal) Clone() *Deal {
+	if d == nil {
+		return nil
+	}
+
+	clone := *d
+
+	// Clone string slices
+	clone.WSeat = cloneStringSlice(d.WSeat)
+	clone.WADomain = cloneStringSlice(d.WADomain)
+
+	// Clone DurFloors slice
+	if d.DurFloors != nil {
+		clone.DurFloors = make([]DurFloors, len(d.DurFloors))
+		for i := range d.DurFloors {
+			clone.DurFloors[i] = *d.DurFloors[i].Clone()
+		}
+	}
+
+	// Clone extension
+	clone.Ext = cloneRawMessage(d.Ext)
+
+	return &clone
+}
